@@ -78,10 +78,30 @@ const productSchema = mongoose.Schema(
     timestamps: true,
   }
 );
+
+// we can use middle ware in mongoose too in the save method  there is two middleware predefined in the mongoose one is pre and another is post; pre is called before the calling of save method and post is called after the save method
+// middleware must be declare before the declaration of model
+
+// using  the pre middleware
+
+productSchema.pre("save", function (next) {
+  console.log("Calling before save");
+  next();
+});
+
+productSchema.post("save", function (doc, next) {
+  console.log("after calling save");
+  next();
+});
+productSchema.methods.logger = function () {
+  console.log(` function called for ${this.name}`);
+};
 // SCHEMA -> MODEL -> Query
 // creating models
 // here mongoose model function takes two parameters one is the name of the model and another is the schema
 const Product = mongoose.model("Product", productSchema);
+
+// can create methods in mongoose
 
 app.get("/", (req, res) => {
   res.send("Route is working! YaY!");
@@ -100,6 +120,8 @@ app.post("/api/v1/product", async (req, res, next) => {
       product.status = "out-of-stock";
     }
     const result = await product.save();
+    result.logger();
+    console.log(" data is saving");
     console.log(result);
     // console.log(req.body);
     res.status(200).json({
