@@ -26,10 +26,20 @@ exports.createServiceProduct = async (data) => {
   return products;
 };
 
+exports.updateBulkServiceProduct = async (data) => {
+  // const result = await Product.updateMany({ _id: data.ids }, data.data, {
+  //   runValidators: true,
+  // });
+  const allPromises = [];
+  data.products.map((product) => {
+    allPromises.push(
+      Product.updateOne({ _id: product.id }, product.data, {
+        runValidators: true,
+      })
+    );
+  });
+  //console.log(allPromises);
 
-exports.updateBulkServiceProduct = async(data)=>{
-  const result = await Product.updateMany({_id:data.ids},data.data,{
-    runValidators:true
-  })
+  const result = Promise.all(allPromises);
   return result;
-}
+};
