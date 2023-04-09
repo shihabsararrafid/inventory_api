@@ -10,6 +10,7 @@ productRouter.route("/bulk-update").patch(productController.updateBulkProducts);
 productRouter
   .route("/:id")
   .get(productController.getSingleProduct)
-  .patch(productController.updateSingleProduct);
+  .patch(productController.updateSingleProductById)
+  .delete(productController.deleteSingleProductById);
 
 module.exports = productRouter;

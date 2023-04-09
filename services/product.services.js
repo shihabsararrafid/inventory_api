@@ -43,3 +43,8 @@ exports.updateBulkServiceProduct = async (data) => {
   const result = Promise.all(allPromises);
   return result;
 };
+
+exports.deleteSingleProductServiceById = async (id) => {
+  const result = Product.deleteOne({ _id: id });
+  return result;
+};

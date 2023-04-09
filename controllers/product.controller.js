@@ -5,6 +5,7 @@ const {
   getSingleServiceProduct,
   updateSingleServiceProduct,
   updateBulkServiceProduct,
+  deleteSingleProductServiceById,
 } = require("../services/product.services");
 
 exports.getProducts = async (req, res, next) => {
@@ -73,7 +74,7 @@ exports.getSingleProduct = async (req, res, next) => {
   }
 };
 
-exports.updateSingleProduct = async (req, res, next) => {
+exports.updateSingleProductById = async (req, res, next) => {
   const { id } = req.params;
   try {
     const result = await updateSingleServiceProduct(id, req.body);
@@ -91,10 +92,7 @@ exports.updateSingleProduct = async (req, res, next) => {
   }
 };
 
-
-
-
-exports.updateBulkProducts=async (req, res, next) => {
+exports.updateBulkProducts = async (req, res, next) => {
   //const { id } = req.params;
   try {
     const result = await updateBulkServiceProduct(req.body);
@@ -107,6 +105,24 @@ exports.updateBulkProducts=async (req, res, next) => {
     res.status(400).json({
       status: "fail",
       message: "fail to update the data",
+      error: error.message,
+    });
+  }
+};
+
+exports.deleteSingleProductById = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const result = await deleteSingleProductServiceById(id);
+    res.status(200).json({
+      status: "Success",
+      message: "Successfully delete  the data",
+      result: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "fail to delete the data",
       error: error.message,
     });
   }
