@@ -48,3 +48,8 @@ exports.deleteSingleProductServiceById = async (id) => {
   const result = Product.deleteOne({ _id: id });
   return result;
 };
+
+exports.deleteBulkServiceProduct = async (ids) => {
+  const res = Product.deleteMany({ _id: ids });
+  return res;
+};

@@ -8,6 +8,9 @@ productRouter
   .post(productController.createProducts);
 productRouter.route("/bulk-update").patch(productController.updateBulkProducts);
 productRouter
+  .route("/bulk-delete")
+  .delete(productController.deleteBulkProducts);
+productRouter
   .route("/:id")
   .get(productController.getSingleProduct)
   .patch(productController.updateSingleProductById)

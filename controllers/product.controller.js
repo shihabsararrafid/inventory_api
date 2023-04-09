@@ -6,6 +6,7 @@ const {
   updateSingleServiceProduct,
   updateBulkServiceProduct,
   deleteSingleProductServiceById,
+  deleteBulkServiceProduct,
 } = require("../services/product.services");
 
 exports.getProducts = async (req, res, next) => {
@@ -123,6 +124,24 @@ exports.deleteSingleProductById = async (req, res, next) => {
     res.status(400).json({
       status: "fail",
       message: "fail to delete the data",
+      error: error.message,
+    });
+  }
+};
+
+exports.deleteBulkProducts = async (req, res, next) => {
+  //const { id } = req.params;
+  try {
+    const result = await deleteBulkServiceProduct(req.body.ids);
+    res.status(200).json({
+      status: "Success",
+      message: "Successfully update the data",
+      result: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "fail to update the data",
       error: error.message,
     });
   }
